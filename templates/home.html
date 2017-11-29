@@ -6,7 +6,7 @@
     <div>
         <label>
             Username:
-            <input type="text" name="username" />
+            <input type="text" name="username" value={{username}} />
         </label>
         {% if user_error %}
             <p>{{user_error}}</p>
@@ -30,13 +30,17 @@
         </label>
         {% if verify_error %}
             <p>{{verify_error}}</p>
+        {% endif %}
     </div>
 
     <div>
         <label>
             Email (optional):
-            <input type="text" name="email" />
+            <input type="text" name="email" value={{email}} />
         </label>
+        {% if email_error %}
+            <p>{{email_error}}</p>
+        {% endif %}
     </div>
 
     <div>
