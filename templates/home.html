@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+<!-- display input form -->
+{% block content %}
+<form action="/signup" method="post">
+    <div>
+        <label>
+            Username:
+            <input type="text" name="username" />
+        </label>
+        {% if user_error %}
+            <p>{{user_error}}</p>
+        {% endif %}
+    </div>
+
+    <div>
+        <label>
+            Password:
+            <input type="password" name="password" />
+        </label>
+        {% if pw_error %}
+            <p>{{pw_error}}</p>
+        {% endif %}
+    </div>
+
+    <div>
+        <label>
+            Verify Password:
+            <input type="password" name="verify_pw" />
+        </label>
+        {% if verify_error %}
+            <p>{{verify_error}}</p>
+    </div>
+
+    <div>
+        <label>
+            Email (optional):
+            <input type="text" name="email" />
+        </label>
+    </div>
+
+    <div>
+        <label>
+            <input type="submit" value="Signup" />
+        </label>
+    </div>
+</form>
+
+
+{% endblock %}
