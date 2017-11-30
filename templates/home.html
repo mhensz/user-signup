@@ -4,12 +4,20 @@
 {% block content %}
 <form action="/signup" method="post">
     <div>
+        {% if username %}
         <label>
             Username:
             <input type="text" name="username" value={{username}} />
         </label>
+        {% else %}
+        <label>
+            Username:
+            <input type="text" name="username" />
+        </label>
+        {% endif %}
+
         {% if user_error %}
-            <p>{{user_error}}</p>
+            <p class="error">{{user_error}}</p>
         {% endif %}
     </div>
 
@@ -19,7 +27,7 @@
             <input type="password" name="password" />
         </label>
         {% if pw_error %}
-            <p>{{pw_error}}</p>
+            <p class="error">{{pw_error}}</p>
         {% endif %}
     </div>
 
@@ -29,17 +37,25 @@
             <input type="password" name="verify_pw" />
         </label>
         {% if verify_error %}
-            <p>{{verify_error}}</p>
+            <p class="error">{{verify_error}}</p>
         {% endif %}
     </div>
 
     <div>
-        <label>
-            Email (optional):
-            <input type="text" name="email" value={{email}} />
-        </label>
+        {% if email %}
+            <label>
+                Email (optional):
+                <input type="text" name="email" value={{email}} />
+            </label>
+        {% else %}
+            <label>
+                Email (optional):
+                <input type="text" name="email" />
+            </label>
+        {% endif %}
+
         {% if email_error %}
-            <p>{{email_error}}</p>
+            <p class="error">{{email_error}}</p>
         {% endif %}
     </div>
 

@@ -5,16 +5,16 @@ app=Flask(__name__)
 
 app.config['DEBUG'] = True      # displays runtime errors in the browser, too
 
-def is_valid(entry):
-    if len(entry)<3 or len(entry)>20 or entry=="" or (" ") in entry:
+def is_valid(entry, min, max):
+    if len(entry)<min or len(entry)>max or entry=="" or (" ") in entry:
         return False
     else:
         return True
 
-def valid_email(email):
+def valid_email(email,min,max):
     # check to see if the email is valid to username standards
     # then check to see if it contains only 1 "@" and "."
-    if not is_valid(email):
+    if not is_valid(email,min,max):
         return False
     elif email.count("@") !=1 or email.count(".") != 1:
         return False
@@ -34,21 +34,22 @@ def signup():
 
     error="/?"
     #check if username and password are valid, passwords match, and email valid
-    if not is_valid(username):
+    if not is_valid(username,3,20):
         user_error = "Not a valid username"
         error += "user_error="+ user_error
-    if not is_valid(password):
+    if not is_valid(password,3,20):
         pw_error = "Not a valid password"
         error += "&pw_error=" + pw_error
     if verify_pw != password or verify_pw=="":
         verify_error = "Passwords don't match"
         error += "&verify_error=" + verify_error
     if email:
-        if not valid_email(email):
+        if not valid_email(email,3,100):
             email_error = "Not a valid email"
+            error += "&email_error=" + email_error
         else:
             email_error=""
-        error += "&email_error=" + email_error
+        
     
     #if error redirect to same page, otherwise direct to welcome page
     if len(error) >2:
@@ -56,7 +57,7 @@ def signup():
         error +="&email="+email
         return redirect(error)
     else:
-        return render_template('welcome.html')
+        return render_template('welcome.html', username=username)
 
 
     #check if password is empty
@@ -73,7 +74,6 @@ def index():
     #get username and email
     username = request.args.get("username")
     email = request.args.get("email")
-
 
     return render_template('home.html', user_error=user_error,
         pw_error=pw_error, 
